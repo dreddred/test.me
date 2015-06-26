@@ -1,0 +1,21 @@
+
+Раз уж в контроллере есть упоминание, что можно и заглянуть в трейт, то почему бы и нет? Согласно psr-4 его путь - vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesAndRegistersUsers.php
+
+-------------------------------------------------------------------------------------
+
+<?php
+
+namespace Illuminate\Foundation\Auth;
+
+trait AuthenticatesAndRegistersUsers
+{
+    use AuthenticatesUsers, RegistersUsers {
+        AuthenticatesUsers::redirectPath insteadof RegistersUsers;
+    }
+}
+
+----------------------------------------------------------------------------------------
+
+Видим, что он просто подключает два трейта из того же неймспейса, то есть, прежде всего, смотрим vendor/laravel/framework/src/Illuminate/Foundation/Auth/AuthenticatesUsers.php
+
+Там и находятся основные методы контроллера. Роуты к ним я прописал. Тебе осталось просмотреть код трейта, написать нужные вьюхи, а при надобности заменить нужные экшоны контроллера на свои.
