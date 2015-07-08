@@ -15,15 +15,21 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('user/{username}.{id}/', function ($username, $id) {
-	return Horsefly\User::findOrFail($id);
-});
-
-// Authentication routes...
+/*// Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');
 Route::post('auth/login', 'Auth\AuthController@postLogin');
 Route::get('auth/logout', 'Auth\AuthController@getLogout');
 
 // Registration routes...
 Route::get('auth/register', 'Auth\AuthController@getRegister');
-Route::post('auth/register', 'Auth\AuthController@postRegister');
+Route::post('auth/register', 'Auth\AuthController@postRegister');*/
+Route::any('home',    function(){
+    return view('welcome');
+});
+Route::any('signup',    'UserController@signup');
+Route::any('login',     'UserController@login');
+Route::get('dashboard', array('before' => 'auth', 'uses' => 'UserController@dashboard'));
+Route::get('logout',    function(){
+    Auth::logout();
+    Redirect::intended('/')->with('message', 'Сейчас вы будете перенаправлены на главную страницу');
+});
